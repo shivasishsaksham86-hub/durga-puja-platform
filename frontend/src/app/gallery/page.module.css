@@ -1,0 +1,73 @@
+.page {
+  min-height: 100vh;
+  padding-top: 140px;
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  padding: 80px 0 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding-top: 40px;
+}
+
+.imageCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--glass-border);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.imageCard:hover .image {
+  transform: scale(1.08);
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  color: var(--accent-gold);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.imageCard:hover .imageOverlay {
+  transform: translateY(0);
+  opacity: 1;
+}

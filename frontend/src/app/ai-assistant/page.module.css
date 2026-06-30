@@ -1,0 +1,180 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: radial-gradient(circle at center, rgba(120, 0, 0, 0.1), transparent 70%);
+}
+
+.chatContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 40px;
+}
+
+.chatWindow {
+  width: 100%;
+  max-width: 800px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.chatHeader {
+  padding: 20px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0,0,0,0.4);
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border: 2px solid var(--accent-gold);
+}
+
+.headerInfo h2 {
+  font-size: 1.2rem;
+  color: var(--accent-gold);
+}
+
+.headerInfo p {
+  font-size: 0.85rem;
+  color: #34c759;
+}
+
+.chatHistory {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Custom Scrollbar for chat */
+.chatHistory::-webkit-scrollbar {
+  width: 6px;
+}
+.chatHistory::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chatHistory::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 3px;
+}
+
+.messageRow {
+  display: flex;
+  width: 100%;
+}
+
+.userRow {
+  justify-content: flex-end;
+}
+
+.message {
+  max-width: 70%;
+  padding: 15px 20px;
+  border-radius: 18px;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.aiMessage {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-top-left-radius: 4px;
+}
+
+.userMessage {
+  background: linear-gradient(135deg, var(--primary-red), var(--primary-dark-red));
+  border-top-right-radius: 4px;
+  box-shadow: 0 4px 15px rgba(193, 18, 31, 0.2);
+}
+
+.quickActionsContainer {
+  padding: 0 30px 10px;
+}
+
+.quickActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quickBtn {
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quickBtn:hover {
+  background: rgba(253, 240, 213, 0.1);
+}
+
+.chatInputArea {
+  padding: 20px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  gap: 15px;
+  background: rgba(0,0,0,0.4);
+}
+
+.chatInput {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 0 20px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.chatInput:focus {
+  border-color: var(--accent-gold);
+}
+
+.sendBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-red);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.sendBtn:hover {
+  transform: scale(1.05);
+  background: var(--primary-dark-red);
+}
+
+@media (max-width: 768px) {
+  .chatContainer { padding: 80px 10px 20px; }
+  .chatWindow { height: 85vh; }
+  .message { max-width: 90%; }
+}

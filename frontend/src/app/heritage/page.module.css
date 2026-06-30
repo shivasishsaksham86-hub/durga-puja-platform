@@ -1,0 +1,188 @@
+.page {
+  min-height: 100vh;
+  padding-top: 140px;
+  position: relative;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.backgroundOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.88); /* Darker overlay for better text readability */
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  padding: 80px 0 40px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* Increased gap for larger content */
+}
+
+.contentCard {
+  padding: 40px;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  background: rgba(15, 15, 15, 0.7); /* Slightly darker glass for contrast */
+}
+
+.reversed {
+  flex-direction: row-reverse;
+}
+
+.textColumn {
+  flex: 1;
+}
+
+.textColumn h2 {
+  font-size: 2.2rem;
+  color: var(--accent-gold);
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(253, 240, 213, 0.2);
+  padding-bottom: 10px;
+}
+
+.textColumn p {
+  color: var(--text-primary);
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.imageColumn {
+  flex: 0 0 40%;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.inlineImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.imageWrapper:hover .inlineImage {
+  transform: scale(1.05);
+}
+
+@media (max-width: 992px) {
+  .contentCard, .reversed { flex-direction: column; padding: 30px; }
+  .imageColumn { width: 100%; margin-top: 20px; }
+}
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.5rem; }
+}
+.runningTextContainer {
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.runningText {
+  animation: scrollUp 25s linear infinite;
+  padding: 20px 0;
+}
+
+.runningText:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+.accordionWrapper {
+  margin-bottom: 20px;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px 25px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.accordionHeader:hover {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.accordionHeader h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+}
+
+.accordionIcon {
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+  transition: transform 0.4s ease;
+}
+
+.accordionIcon.open {
+  transform: rotate(180deg);
+}
+
+.accordionContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
+  opacity: 0;
+}
+
+.accordionContent.open {
+  max-height: 2500px; /* large enough to fit content */
+  opacity: 1;
+  margin-top: 15px;
+}
