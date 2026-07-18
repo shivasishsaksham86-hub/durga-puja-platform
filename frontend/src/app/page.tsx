@@ -1,68 +1,108 @@
+"use client";
+import Image from "next/image";
+import styles from "./page.module.css";
 import Link from "next/link";
-import { Sparkles, Calendar, MapPin, QrCode, ShieldAlert } from "lucide-react";
+import { useState, useRef } from "react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col items-center">
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-4 text-center">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-neutral-950/80 to-neutral-950 z-0" />
-        
-        <div className="relative z-10 flex flex-col items-center max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary mb-6 ring-1 ring-primary/30">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Sarbojanin Durgotsav 2026</span>
+    <div className={styles.page}>
+      {/* Navigation */}
+      <nav className={styles.navbar}>
+        <div className="container">
+          <div className={styles.navContent}>
+            <div className={styles.logo}>
+              <span className="text-gradient">আগমনী</span> AGOMONI
+            </div>
+            <div className={styles.navLinks}>
+              <Link href="/heritage" className={styles.navLink}>Heritage Hub</Link>
+              <Link href="/timeline" className={styles.navLink}>Timeline</Link>
+              <Link href="/gallery" className={styles.navLink}>Gallery</Link>
+              <Link href="/map" className={styles.navLink}>Smart Map</Link>
+              <Link href="/login" className={styles.navLink}>Dashboard</Link>
+              <Link href="/ai-assistant" className="btn-primary">Ask AI Assistant</Link>
+            </div>
           </div>
-          
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-300 via-primary to-rose-600">
-            Divine Grandeur,
-            <br /> Digitally Managed.
-          </h1>
-          
-          <p className="text-lg md:text-xl text-neutral-400 mb-10 max-w-2xl leading-relaxed">
-            Experience the ultimate Durga Puja festival with real-time crowd updates, 
-            instant digital VIP passes, and interactive pandal navigation.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-            <Link href="/passes" className="px-8 py-4 rounded-full bg-primary hover:bg-rose-700 text-white font-bold transition-all transform hover:scale-105 shadow-[0_0_40px_-10px_rgba(225,29,72,0.8)]">
-              Book VIP Pass
-            </Link>
-            <Link href="/map" className="px-8 py-4 rounded-full bg-neutral-800 hover:bg-neutral-700 text-white font-semibold border border-neutral-700 transition-all">
-              Explore Pandal Map
-            </Link>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.heroBackground}>
+           <video 
+             autoPlay 
+             loop 
+             muted 
+             playsInline 
+             className={styles.heroVideo}
+           >
+             <source src="/videos/final.mp4" type="video/mp4" />
+           </video>
+           <div className={styles.heroOverlay}></div>
+        </div>
+        <div className={`container ${styles.heroContent}`}>
+          <div className={`glass-panel ${styles.heroCard} animate-fade-up`}>
+            <div className={styles.unescoBadge}>UNESCO Intangible Cultural Heritage</div>
+            <h1 className={styles.heroTitle}>আগমনী <span className="text-gradient">AGOMONI</span></h1>
+            <p className={styles.heroSubtitle}>
+              Experience the Living Legacy of Kolkata's Durga Puja
+            </p>
+            <div className={styles.heroActions}>
+              <Link href="/map" className="btn-primary">
+                Explore Pandals
+              </Link>
+              <Link href="/heritage" className="btn-secondary">
+                Discover Heritage
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="w-full max-w-7xl px-6 py-24 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
-          {
-            icon: <QrCode className="w-8 h-8 text-primary" />,
-            title: "Digital Ticketing",
-            desc: "Skip the lines with our instant QR code based VIP entry passes."
-          },
-          {
-            icon: <ShieldAlert className="w-8 h-8 text-orange-500" />,
-            title: "Real-time Safety",
-            desc: "Live crowd capacity monitoring and instant emergency reporting."
-          },
-          {
-            icon: <Calendar className="w-8 h-8 text-yellow-500" />,
-            title: "Event Schedules",
-            desc: "Never miss an Aarti or cultural program with live updates."
-          }
-        ].map((feature, i) => (
-          <div key={i} className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:border-primary/50 transition-colors group">
-            <div className="mb-4 p-3 rounded-2xl bg-neutral-800/50 inline-block group-hover:scale-110 transition-transform">
-              {feature.icon}
-            </div>
-            <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-            <p className="text-neutral-400 leading-relaxed">{feature.desc}</p>
+      {/* Features Grid Section */}
+      <section className={`section-padding ${styles.featuresSection}`}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2 className="animate-fade-up delay-1">A Celebration of Art & Culture</h2>
+            <p className="animate-fade-up delay-2">From century-old traditions to immersive modern artistry.</p>
           </div>
-        ))}
+          
+          <div className={styles.featureGrid}>
+            <div className={`glass-panel ${styles.featureCard} animate-fade-up delay-1`}>
+              <div className={styles.featureImageContainer}>
+                 <Image src="/images/dhunuchi_dance_1782586424433.png" alt="Dhunuchi Dance" fill className={styles.featureImage} />
+              </div>
+              <div className={styles.featureCardContent}>
+                <h3>Cultural Pulse</h3>
+                <p>Witness the mesmerizing Dhunuchi dance, rhythmic beats of the Dhaak, and traditional rituals.</p>
+              </div>
+            </div>
+            
+            <div className={`glass-panel ${styles.featureCard} animate-fade-up delay-2`}>
+              <div className={styles.featureCardContent}>
+                <h3>AI Travel Assistant</h3>
+                <p>Get personalized pandal-hopping itineraries based on real-time crowds, your location, and preferences.</p>
+                <Link href="/ai-assistant" className={styles.textLink}>Try it now →</Link>
+              </div>
+            </div>
+
+            <div className={`glass-panel ${styles.featureCard} animate-fade-up delay-3`}>
+              <div className={styles.featureCardContent}>
+                <h3>Bonedi Bari Heritage</h3>
+                <p>Step back in time and visit the majestic ancestral homes that have celebrated Puja for centuries.</p>
+                <Link href="/heritage" className={styles.textLink}>Read More →</Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
-    </main>
+      
+      {/* Footer Placeholder */}
+      <footer className={styles.footer}>
+        <div className="container">
+          <p>&copy; {new Date().getFullYear()} Durga Puja Kolkata Heritage Platform. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
   );
 }

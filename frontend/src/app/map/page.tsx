@@ -1,54 +1,125 @@
 "use client";
+import { useState, useMemo, useRef } from "react";
+import styles from "./page.module.css";
+import Link from "next/link";
 import dynamic from 'next/dynamic';
-import { MapPin, Coffee, Crosshair } from 'lucide-react';
 
-const Map = dynamic(() => import('@/components/MapComponent'), { ssr: false });
+const MapComponent = dynamic(() => import('./MapComponent'), { 
+  ssr: false,
+  loading: () => <div className={styles.mapLoading}>Loading Interactive Map...</div>
+});
 
-export default function MapPage() {
+export default function SmartMap() {
+  const [activePandal, setActivePandal] = useState<any | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const allPandals = [
+    { name: "Sreebhumi Sporting Club", area: "Lake Town", crowd: "High", theme: "Vatican City Replica", lat: 22.6033, lng: 88.4063 },
+    { name: "Suruchi Sangha", area: "New Alipore", crowd: "Medium", theme: "Eco-friendly Bengal", lat: 22.5126, lng: 88.3312 },
+    { name: "College Square", area: "Central Kolkata", crowd: "High", theme: "Traditional Lighting", lat: 22.5760, lng: 88.3637 },
+    { name: "Deshapriya Park", area: "South Kolkata", crowd: "Very High", theme: "Grand Architecture", lat: 22.5192, lng: 88.3533 },
+    { name: "Bosepukur Sitala Mandir", area: "Kasba", crowd: "Medium", theme: "Tribal Art", lat: 22.5144, lng: 88.3888 },
+    { name: "Bagbazar Sarbojanin", area: "North Kolkata", crowd: "High", theme: "Traditional Ekchala", lat: 22.6021, lng: 88.3685 },
+    { name: "Kumartuli Park", area: "North Kolkata", crowd: "Medium", theme: "Modern Abstract", lat: 22.5997, lng: 88.3632 },
+    // Bari Pujos added
+    { name: "Sovabazar Rajbari", area: "North Kolkata", crowd: "High", theme: "Bonedi Bari Traditional", lat: 22.6015, lng: 88.3638 },
+    { name: "Sabarna Roy Choudhury", area: "Barisha", crowd: "Medium", theme: "Oldest Family Puja", lat: 22.4827, lng: 88.3155 },
+    { name: "Laha Bari", area: "Central Kolkata", crowd: "Medium", theme: "Bonedi Bari Heritage", lat: 22.5802, lng: 88.3635 }
+  ];
+
+  const filteredPandals = useMemo(() => {
+    return allPandals.filter(p => 
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      p.area.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.theme.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
+
   return (
-    <div className="min-h-screen bg-neutral-950 p-6 md:p-12 flex flex-col md:flex-row gap-8">
-      <div className="w-full md:w-1/3 flex flex-col gap-6">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Interactive Map</h1>
-          <p className="text-neutral-400">Navigate the pandal grounds with ease. Find amenities, exits, and events.</p>
+    <div className={styles.page}>
+      <nav className="navbar">
+        <div className="container">
+          <div className="navContent">
+            <Link href="/" className="logo">
+              <span className="text-gradient">আগমনী</span> AGOMONI
+            </Link>
+            <div className="navLinks">
+              <Link href="/heritage" className="navLink">Heritage Hub</Link>
+              <Link href="/timeline" className="navLink">Timeline</Link>
+              <Link href="/gallery" className="navLink">Gallery</Link>
+              <Link href="/map" className="navLink text-gradient">Smart Map</Link>
+              <Link href="/login" className="navLink">Dashboard</Link>
+              <Link href="/ai-assistant" className="btn-primary">Ask AI Assistant</Link>
+            </div>
+          </div>
         </div>
-        
-        <div className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 flex-1">
-          <h3 className="text-xl font-bold mb-6">Directory</h3>
-          <ul className="space-y-4">
-            <li className="flex items-center gap-4 p-3 hover:bg-neutral-800 rounded-xl cursor-pointer transition-colors border border-transparent hover:border-primary/30">
-              <div className="p-2 bg-primary/20 text-primary rounded-lg">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-bold">Main Pandal (Gate 1)</p>
-                <p className="text-xs text-neutral-400">Current Capacity: 75%</p>
-              </div>
-            </li>
-            <li className="flex items-center gap-4 p-3 hover:bg-neutral-800 rounded-xl cursor-pointer transition-colors border border-transparent hover:border-neutral-700">
-              <div className="p-2 bg-orange-950 text-orange-500 rounded-lg">
-                <Coffee className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-bold">Food Court</p>
-                <p className="text-xs text-neutral-400">Open until 2:00 AM</p>
-              </div>
-            </li>
-            <li className="flex items-center gap-4 p-3 hover:bg-neutral-800 rounded-xl cursor-pointer transition-colors border border-transparent hover:border-red-900/50">
-              <div className="p-2 bg-red-950 text-red-500 rounded-lg">
-                <Crosshair className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-bold text-red-400">Medical Camp</p>
-                <p className="text-xs text-neutral-400">24/7 Assistance available</p>
-              </div>
-            </li>
-          </ul>
+      </nav>
+
+      <div className={styles.mapContainer}>
+        {/* Sidebar */}
+        <div className={`glass-panel ${styles.sidebar}`}>
+          <div className={styles.sidebarHeader}>
+            <h2>Pandal Radar</h2>
+            <p>Interactive real-time navigation</p>
+          </div>
+          
+          <div className={styles.searchBar}>
+            <input 
+              type="text" 
+              placeholder="Search pandals, areas, or themes..." 
+              className={styles.searchInput} 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+
+          <div className={styles.pandalListContainer}>
+            <div className={styles.pandalList} ref={listRef}>
+              {filteredPandals.length === 0 ? (
+                <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginTop: '20px' }}>No pandals found.</p>
+              ) : (
+                filteredPandals.map((pandal, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`${styles.pandalCard} ${activePandal?.name === pandal.name ? styles.activeCard : ''}`}
+                    onClick={() => setActivePandal(pandal)}
+                  >
+                    <div className={styles.pandalInfo}>
+                      <h3>{pandal.name}</h3>
+                      <span className={styles.areaBadge}>{pandal.area}</span>
+                      <p className={styles.themeInfo}>Theme: {pandal.theme}</p>
+                    </div>
+                    <div className={styles.crowdIndicator}>
+                      <div className={`${styles.crowdDot} ${pandal.crowd === 'Very High' ? styles.red : pandal.crowd === 'High' ? styles.orange : styles.green}`}></div>
+                      <span className={styles.crowdText}>{pandal.crowd}</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+            
+            {/* Scroll Up Button */}
+            <button 
+              className={styles.scrollUpBtn} 
+              onClick={() => listRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+              title="Scroll to top"
+            >
+              ↑
+            </button>
+          </div>
+          
+          <div className={styles.sidebarFooter}>
+            <Link href="/ai-assistant" className="btn-primary" style={{ width: '100%' }}>
+              Auto-Plan Route with AI
+            </Link>
+          </div>
         </div>
-      </div>
-      
-      <div className="w-full md:w-2/3 h-[60vh] md:h-[80vh]">
-        <Map />
+
+        {/* Interactive Map Area */}
+        <div className={styles.mapArea}>
+          <MapComponent pandals={filteredPandals} activePandal={activePandal} />
+        </div>
       </div>
     </div>
   );
