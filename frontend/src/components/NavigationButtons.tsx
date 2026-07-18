@@ -1,5 +1,7 @@
 "use client";
+import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { Volume2, VolumeX } from "lucide-react";
 import styles from "./NavigationButtons.module.css";
 
 const routes = ["/", "/heritage", "/timeline", "/gallery", "/map", "/ai-assistant"];
@@ -7,6 +9,35 @@ const routes = ["/", "/heritage", "/timeline", "/gallery", "/map", "/ai-assistan
 export default function NavigationButtons() {
   const router = useRouter();
   const pathname = usePathname();
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio("/audio/9471-4f83-45ac-9e07-f6687f891063.mp3");
+    audio.loop = true;
+    audioRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
+  const toggleMute = () => {
+    if (!audioRef.current) return;
+    
+    if (isMuted) {
+      if (audioRef.current.currentTime === 0) {
+        audioRef.current.currentTime = 106;
+      }
+      audioRef.current.play().catch(e => console.error("Audio play failed:", e));
+      audioRef.current.muted = false;
+      setIsMuted(false);
+    } else {
+      audioRef.current.pause();
+      setIsMuted(true);
+    }
+  };
 
   const currentIndex = routes.indexOf(pathname || "/");
   
@@ -24,6 +55,14 @@ export default function NavigationButtons() {
 
   return (
     <div className={styles.navContainer}>
+      <button 
+        onClick={toggleMute} 
+        className={styles.navBtn} 
+        title={isMuted ? "Play Music" : "Mute Music"}
+      >
+        {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+      </button>
+
       <button 
         onClick={handleBack} 
         className={`${styles.navBtn} ${currentIndex <= 0 ? styles.disabled : ''}`} 
