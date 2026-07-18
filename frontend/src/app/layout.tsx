@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 import FestiveDecorations from "../components/FestiveDecorations";
+import VolumeControl from "../components/VolumeControl";
 
 export default function RootLayout({
   children,
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <FestiveDecorations />
+        <VolumeControl />
         <main>{children}</main>
         <NavigationButtons />
       </body>
