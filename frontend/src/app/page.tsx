@@ -93,6 +93,22 @@ export default function Home() {
                 <Link href="/heritage" className={styles.textLink}>Read More →</Link>
               </div>
             </div>
+
+            <div className={`glass-panel ${styles.featureCard} animate-fade-up delay-1`}>
+              <div className={styles.featureCardContent}>
+                <h3>Puja Management Dashboard</h3>
+                <p>Comprehensive tools for admins and volunteers to manage crowd flow, donations, and events in real-time.</p>
+                <Link href="/login" className={styles.textLink}>Access Dashboard →</Link>
+              </div>
+            </div>
+
+            <div className={`glass-panel ${styles.featureCard} animate-fade-up delay-2`}>
+              <div className={styles.featureCardContent}>
+                <h3>Digital Ticketing</h3>
+                <p>Skip the lines with our instant QR code-based VIP entry passes for exclusive pandal access.</p>
+                <Link href="/passes" className={styles.textLink}>Get VIP Pass →</Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
