@@ -8,10 +8,13 @@ export default function VolumeControl() {
 
   useEffect(() => {
     // Create audio element only on the client
-    const audio = new Audio("/videos/final.mp4"); // Fallback to video audio if no dedicated track exists
+    const audio = new Audio("/audio/9471-4f83-45ac-9e07-f6687f891063.mp3");
     audio.loop = true;
     audioRef.current = audio;
 
+    // Optional: when the audio loops, do you want it to restart at 106s or 0s? 
+    // Usually looping restarts at 0s, but we will start it at 106 initially.
+    
     return () => {
       audio.pause();
       audioRef.current = null;
@@ -22,6 +25,10 @@ export default function VolumeControl() {
     if (!audioRef.current) return;
     
     if (isMuted) {
+      // Set to 1m46s (106 seconds) if it's starting from 0
+      if (audioRef.current.currentTime === 0) {
+        audioRef.current.currentTime = 106;
+      }
       // User interacting lets us play audio
       audioRef.current.play().catch(e => console.error("Audio play failed:", e));
       audioRef.current.muted = false;
